@@ -1,6 +1,6 @@
 {
   "name": "verdaccio-ldap-node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "LDAP plugin for Verdaccio with node-ldap",
   "main": "index.js",
   "repository": "git@github.com:NathanCong/verdaccio-ldap-node.git",
