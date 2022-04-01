@@ -1,6 +1,6 @@
 {
   "name": "verdaccio-ldap-node",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "LDAP plugin for Verdaccio with node-ldap",
   "main": "index.js",
   "repository": {
@@ -11,7 +11,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "node-ldap": "^1.0.4"
+    "ldapjs": "^2.3.2"
   },
   "bugs": {
     "url": "https://github.com/NathanCong/verdaccio-ldap-node/issues"
@@ -20,6 +20,6 @@
   "keywords": [
     "verdaccio",
     "ldap",
-    "ldap-node"
+    "auth"
   ]
 }

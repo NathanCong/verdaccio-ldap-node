@@ -1,37 +1,37 @@
 /**
  * verdaccio-ldap-node
  */
-"use strict";
+'use strict';
 
-const LdapClient = require("node-ldap");
+const ldapjs = require('ldapjs');
 
 function Auth(config, stuff) {
   const _this = Object.create(Auth.prototype);
   _this._users = {};
-  // config for this module
-  _this._config = config;
-  // verdaccio logger
-  _this._logger = stuff.logger;
+  _this._config = config; // config for this module
+  _this._logger = stuff.logger; // verdaccio logger
   return _this;
 }
 
-Auth.prototype.authenticate = function (username, password, callback) {
+Auth.prototype.authenticate = function(username, password, callback) {
   const _this = this;
-  // initial LDAP client
-  const client = new LdapClient(_this._config);
-  // start auth
-  client
-    .auth(`${username}@xdf.cn`, password)
-    .then(function () {
-      callback(null, [username]);
-    })
-    .catch(function (error) {
-      _this._logger.warn({ username, error }, `verdaccio-ldap error ${error}`);
+  // 1.Initial LDAP client
+  const client = ldapjs.createClient({
+    url: (_this._config || {}).ldapUrl,
+    timeout: 2000,
+    connectTimeout: 2000,
+    reconnect: false,
+  });
+  // 2.Check username & password
+  client.bind(`${username}@xdf.cn`, password, function(err) {
+    if (err) {
+      _this._logger.warn({ username, err }, `verdaccio-ldap-node error ${err}`);
       callback(null, false);
-    })
-    .finally(function () {
-      client.disconnect();
-    });
+      return;
+    }
+    client.unbind();
+    callback(null, [username]);
+  });
 };
 
 module.exports = Auth;
