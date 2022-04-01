@@ -18,8 +18,8 @@ Auth.prototype.authenticate = function(username, password, callback) {
   // 1.Create LDAP client
   const client = ldapjs.createClient({
     url: (_this._config || {}).ldapUrl,
-    timeout: 2000,
-    connectTimeout: 2000,
+    timeout: 5000,
+    connectTimeout: 5000,
     reconnect: false,
   });
   // 2.Check LDAP connection
